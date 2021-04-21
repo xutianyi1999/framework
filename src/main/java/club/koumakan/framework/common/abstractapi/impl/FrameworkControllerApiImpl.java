@@ -7,6 +7,9 @@ import club.koumakan.framework.common.http.MsgResult;
 import club.koumakan.framework.common.http.PageRequestInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -20,6 +23,7 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi,
     }
 
     @Override
+    @GetMapping("/findById")
     public MsgResult<T> findById(long id) {
         try {
             return MsgResult.success(service.findById(id, true));
@@ -30,6 +34,7 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi,
     }
 
     @Override
+    @GetMapping("/findByIds")
     public MsgResult<List<T>> findByIds(List<Long> ids) {
         try {
             return MsgResult.success(service.findByIds(ids, true));
@@ -40,7 +45,8 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi,
     }
 
     @Override
-    public MsgResult<T> save(T entity) {
+    @PostMapping("/save")
+    public MsgResult<T> save(@RequestBody T entity) {
         try {
             return MsgResult.success(service.save(entity));
         } catch (Exception e) {
@@ -50,7 +56,8 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi,
     }
 
     @Override
-    public MsgResult<List<T>> saveAll(List<T> entityList) {
+    @PostMapping("/saveAll")
+    public MsgResult<List<T>> saveAll(@RequestBody List<T> entityList) {
         try {
             return MsgResult.success(service.saveAll(entityList));
         } catch (Exception e) {
@@ -60,6 +67,7 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi,
     }
 
     @Override
+    @PostMapping("/deleteById")
     public MsgResult<T> deleteById(long id) {
         try {
             service.deleteById(id);
@@ -71,7 +79,8 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi,
     }
 
     @Override
-    public MsgResult<T> deleteByIds(List<Long> ids) {
+    @PostMapping("/deleteByIds")
+    public MsgResult<T> deleteByIds(@RequestBody List<Long> ids) {
         try {
             service.deleteByIds(ids);
             return MsgResult.success();
@@ -82,7 +91,8 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi,
     }
 
     @Override
-    public MsgResult<T> deleteByCondition(T condition) {
+    @PostMapping("/deleteByCondition")
+    public MsgResult<T> deleteByCondition(@RequestBody T condition) {
         try {
             service.deleteByCondition(condition);
             return MsgResult.success();
@@ -93,6 +103,7 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi,
     }
 
     @Override
+    @GetMapping("/findAll")
     public MsgResult<List<T>> findAll() {
         try {
             return MsgResult.success(service.findAll(true));
@@ -103,6 +114,7 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi,
     }
 
     @Override
+    @GetMapping("/findByCondition")
     public MsgResult<List<T>> findByCondition(T condition) {
         try {
             return MsgResult.success(service.findByCondition(condition, true));
@@ -113,6 +125,7 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi,
     }
 
     @Override
+    @GetMapping("/findByPage")
     public MsgResult<Page<T>> findByPage(PageRequestInfo pageRequestInfo, T condition) {
         try {
             return MsgResult.success(service.findByPage(pageRequestInfo, condition, true));

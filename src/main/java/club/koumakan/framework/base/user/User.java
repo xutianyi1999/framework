@@ -1,11 +1,13 @@
-package club.koumakan.framework.base.user.entity;
+package club.koumakan.framework.base.user;
 
+import club.koumakan.framework.base.role.Role;
 import club.koumakan.framework.common.abstractapi.FrameworkEntityApi;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -15,6 +17,8 @@ public class User implements FrameworkEntityApi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String name;
 
     private String username;
 
@@ -27,4 +31,7 @@ public class User implements FrameworkEntityApi {
 
     @Transient
     private String passwordStr;
+
+    @Transient
+    private List<Role> roles;
 }
