@@ -43,6 +43,36 @@ public class UserService extends FrameworkServiceApiImpl<User, UserDAO> {
         userRoleService.saveAll(userRoles);
     }
 
+    public User findByUsername(String username) {
+        User condition = new User();
+        condition.setUsername(username);
+
+        List<User> userList = super.findByCondition(condition, true);
+
+        if (!userList.isEmpty()) {
+            return userList.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(long id) {
+        UserRole condition = new UserRole();
+        condition.setUserId(id);
+        userRoleService.deleteByCondition(condition);
+
+        super.deleteById(id);
+    }
+
+    @Transactional
+    public void deleteByIds(List<Long> ids) {
+        for (Long id : ids) {
+            deleteById(id);
+        }
+    }
+
     @Override
     public void translate(User user) {
         if (user != null) {

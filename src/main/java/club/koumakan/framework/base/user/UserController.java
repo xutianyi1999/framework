@@ -5,6 +5,12 @@ import club.koumakan.framework.common.abstractapi.impl.FrameworkServiceApiImpl;
 import club.koumakan.framework.common.http.MsgResult;
 import cn.hutool.crypto.digest.HMac;
 import org.apache.logging.log4j.util.Strings;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,23 +24,25 @@ import java.util.List;
 @RequestMapping("/base/user")
 public class UserController extends FrameworkControllerApiImpl<User, UserDAO> {
 
-    private static final byte[] KEY = "k43bsadf8".getBytes(StandardCharsets.UTF_8);
     private static final String ALGORITHM = "HmacSHA256";
 
     private final UserService userService;
+    private final byte[] key;
 
-    public UserController(FrameworkServiceApiImpl<User, UserDAO> service, UserService userService) {
+    public UserController(
+            FrameworkServiceApiImpl<User, UserDAO> service,
+            UserService userService,
+            @Value("${framework.user.signKey}") String signKey
+    ) {
         super(service);
         this.userService = userService;
+        this.key = signKey.getBytes(StandardCharsets.UTF_8);
     }
 
     @Override
     public MsgResult<User> save(@RequestBody User entity) {
-        if (Strings.isNotBlank(entity.getPasswordStr())) {
-            HMac hmac = new HMac(ALGORITHM, KEY);
-            byte[] password = hmac.digest(entity.getPasswordStr(), StandardCharsets.UTF_8.name());
-
-            entity.setPassword(password);
+        if (Strings.isNotBlank(entity.getPassword())) {
+            entity.setPassword(crypt(entity.getPassword()));
         }
 
         if (entity.getId() == null) {
@@ -49,5 +57,28 @@ public class UserController extends FrameworkControllerApiImpl<User, UserDAO> {
     public MsgResult<User> setRole(long userId, @RequestBody List<Long> roleIds) {
         userService.setRole(userId, roleIds);
         return MsgResult.success();
+    }
+
+    @PostMapping("/login")
+    public MsgResult<User> login(User user) {
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken();
+
+        token.setUsername(user.getUsername());
+        token.setPassword(crypt(user.getPassword()).toCharArray());
+
+        try {
+            subject.login(token);
+            return MsgResult.success((User) subject.getPrincipal());
+        } catch (UnknownAccountException e) {
+            return MsgResult.error("用户名不存在");
+        } catch (AuthenticationException e) {
+            return MsgResult.error("认证失败");
+        }
+    }
+
+    private String crypt(String password) {
+        HMac hmac = new HMac(ALGORITHM, key);
+        return hmac.digestHex(password, StandardCharsets.UTF_8.name());
     }
 }

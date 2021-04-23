@@ -12,6 +12,5 @@ public class UserRoleService extends FrameworkServiceApiImpl<UserRole, UserRoleD
 
     @Override
     public void translate(UserRole entity) {
-
     }
 }

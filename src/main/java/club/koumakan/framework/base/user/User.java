@@ -23,14 +23,11 @@ public class User implements FrameworkEntityApi {
     private String username;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private byte[] password;
+    private String password;
 
     private Date createTime;
 
     private Date updateTime;
-
-    @Transient
-    private String passwordStr;
 
     @Transient
     private List<Role> roles;
