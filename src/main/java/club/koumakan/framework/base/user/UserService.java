@@ -47,13 +47,7 @@ public class UserService extends FrameworkServiceApiImpl<User, UserDAO> {
         User condition = new User();
         condition.setUsername(username);
 
-        List<User> userList = super.findByCondition(condition, true);
-
-        if (!userList.isEmpty()) {
-            return userList.get(0);
-        } else {
-            return null;
-        }
+        return super.findOneByCondition(condition, true);
     }
 
     @Override

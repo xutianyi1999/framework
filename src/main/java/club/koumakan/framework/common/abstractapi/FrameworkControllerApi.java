@@ -26,5 +26,11 @@ public interface FrameworkControllerApi<T> {
 
     MsgResult<List<T>> findByCondition(T condition);
 
+    MsgResult<T> findOneByCondition(T condition);
+
     MsgResult<Page<T>> findByPage(PageRequestInfo pageRequestInfo, T condition);
+
+    MsgResult<Long> count(T condition);
+
+    MsgResult<Boolean> exists(T condition);
 }

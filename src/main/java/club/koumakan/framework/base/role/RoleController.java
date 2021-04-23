@@ -35,7 +35,7 @@ public class RoleController extends FrameworkControllerApiImpl<Role, RoleDAO> {
         UserRole userRoleCondition = new UserRole();
         userRoleCondition.setRoleId(id);
 
-        if (userRoleService.findByCondition(userRoleCondition).isEmpty()) {
+        if (userRoleService.exists(userRoleCondition)) {
             return super.deleteById(id);
         } else {
             return MsgResult.error("存在该角色用户");

@@ -139,6 +139,18 @@ public abstract class FrameworkServiceApiImpl<
     }
 
     @Override
+    public T findOneByCondition(T condition) {
+        return findOneByCondition(condition, false);
+    }
+
+    @Override
+    public T findOneByCondition(T condition, boolean translate) {
+        T t = dao.findOne(Example.of(condition)).get();
+        translate(t);
+        return t;
+    }
+
+    @Override
     public Page<T> findByPage(PageRequestInfo pageRequestInfo, T condition) {
         return findByPage(pageRequestInfo, condition, false);
     }
@@ -174,5 +186,15 @@ public abstract class FrameworkServiceApiImpl<
             }
         }
         return page;
+    }
+
+    @Override
+    public long count(T condition) {
+        return dao.count(Example.of(condition));
+    }
+
+    @Override
+    public boolean exists(T condition) {
+        return dao.exists(Example.of(condition));
     }
 }

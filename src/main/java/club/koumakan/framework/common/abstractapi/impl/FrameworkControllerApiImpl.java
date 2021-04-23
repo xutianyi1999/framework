@@ -125,10 +125,41 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi,
     }
 
     @Override
+    @GetMapping("/findOneByCondition")
+    public MsgResult<T> findOneByCondition(T condition) {
+        try {
+            return MsgResult.success(service.findOneByCondition(condition, true));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return MsgResult.error();
+        }
+    }
+
+    @Override
     @GetMapping("/findByPage")
     public MsgResult<Page<T>> findByPage(PageRequestInfo pageRequestInfo, T condition) {
         try {
             return MsgResult.success(service.findByPage(pageRequestInfo, condition, true));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return MsgResult.error();
+        }
+    }
+
+    @Override
+    @GetMapping("/count")
+    public MsgResult<Long> count(T condition) {
+        try {
+            return MsgResult.success(service.count(condition));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return MsgResult.error();
+        }
+    }
+
+    public MsgResult<Boolean> exists(T condition) {
+        try {
+            return MsgResult.success(service.exists(condition));
         } catch (Exception e) {
             e.printStackTrace();
             return MsgResult.error();

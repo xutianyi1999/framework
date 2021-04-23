@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -20,13 +19,8 @@ public class DataDictionaryService extends FrameworkServiceApiImpl<DataDictionar
         DataDictionary condition = new DataDictionary();
         condition.setTypeName(typeName);
 
-        List<DataDictionary> dataDictionaryList = super.findByCondition(condition, true);
-
-        if (!dataDictionaryList.isEmpty()) {
-            return dataDictionaryList.get(0).getMappingJsonObject();
-        } else {
-            return new HashMap<>();
-        }
+        DataDictionary dataDictionary = super.findOneByCondition(condition, true);
+        return dataDictionary.getMappingJsonObject();
     }
 
     public String findValueByTypeNameAndKey(String typeName, String key) {

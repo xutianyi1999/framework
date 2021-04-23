@@ -33,9 +33,17 @@ public interface FrameworkServiceApi<T> {
 
     List<T> findByCondition(T condition, boolean translate);
 
+    T findOneByCondition(T condition);
+
+    T findOneByCondition(T condition, boolean translate);
+
     Page<T> findByPage(PageRequestInfo pageRequestInfo, T condition);
 
     Page<T> findByPage(PageRequestInfo pageRequestInfo, T condition, boolean translate);
 
     void translate(T entity);
+
+    long count(T condition);
+
+    boolean exists(T condition);
 }
