@@ -1,7 +1,6 @@
 package club.koumakan.framework.base.user;
 
 import club.koumakan.framework.common.abstractapi.impl.FrameworkControllerApiImpl;
-import club.koumakan.framework.common.abstractapi.impl.FrameworkServiceApiImpl;
 import club.koumakan.framework.common.http.MsgResult;
 import cn.hutool.crypto.digest.HMac;
 import org.apache.logging.log4j.util.Strings;
@@ -19,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/base/user")
-public class UserController extends FrameworkControllerApiImpl<User, UserDAO> {
+public class UserController extends FrameworkControllerApiImpl<User> {
 
     private static final String ALGORITHM = "HmacSHA256";
 
@@ -27,11 +26,10 @@ public class UserController extends FrameworkControllerApiImpl<User, UserDAO> {
     private final byte[] key;
 
     public UserController(
-            FrameworkServiceApiImpl<User, UserDAO> service,
             UserService userService,
             @Value("${framework.user.signKey}") String signKey
     ) {
-        super(service);
+        super(userService);
         this.userService = userService;
         this.key = signKey.getBytes(StandardCharsets.UTF_8);
     }
@@ -51,7 +49,7 @@ public class UserController extends FrameworkControllerApiImpl<User, UserDAO> {
     }
 
     @PostMapping("/setRole")
-    public MsgResult<User> setRole(long userId, @RequestBody List<Long> roleIds) {
+    public MsgResult<Void> setRole(long userId, @RequestBody List<Long> roleIds) {
         userService.setRole(userId, roleIds);
         return MsgResult.success();
     }
@@ -75,7 +73,7 @@ public class UserController extends FrameworkControllerApiImpl<User, UserDAO> {
     }
 
     @GetMapping("/logout")
-    public MsgResult<User> logout() {
+    public MsgResult<Void> logout() {
         SecurityUtils.getSubject().logout();
         return MsgResult.success();
     }

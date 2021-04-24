@@ -1,24 +1,21 @@
 package club.koumakan.framework.common.abstractapi.impl;
 
 import club.koumakan.framework.common.abstractapi.FrameworkControllerApi;
-import club.koumakan.framework.common.abstractapi.FrameworkDAOApi;
 import club.koumakan.framework.common.abstractapi.FrameworkEntityApi;
 import club.koumakan.framework.common.http.MsgResult;
 import club.koumakan.framework.common.http.PageRequestInfo;
 import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi,
-        DAO extends JpaRepository<T, Long> & FrameworkDAOApi> implements FrameworkControllerApi<T> {
+public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> implements FrameworkControllerApi<T> {
 
-    private final FrameworkServiceApiImpl<T, DAO> service;
+    private final FrameworkServiceApiImpl<T> service;
 
-    public FrameworkControllerApiImpl(FrameworkServiceApiImpl<T, DAO> service) {
+    public FrameworkControllerApiImpl(FrameworkServiceApiImpl<T> service) {
         this.service = service;
     }
 

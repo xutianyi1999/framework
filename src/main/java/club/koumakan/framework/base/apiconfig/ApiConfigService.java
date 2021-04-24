@@ -1,18 +1,18 @@
-package club.koumakan.framework.base.role;
+package club.koumakan.framework.base.apiconfig;
 
 import club.koumakan.framework.common.abstractapi.impl.FrameworkServiceApiImpl;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RoleService extends FrameworkServiceApiImpl<Role> {
+public class ApiConfigService extends FrameworkServiceApiImpl<ApiConfig> {
 
-    public RoleService(JpaRepository<Role, Long> dao) {
+    public ApiConfigService(JpaRepository<ApiConfig, Long> dao) {
         super(dao);
     }
 
     @Override
-    public void translate(Role entity) {
+    public void translate(ApiConfig entity) {
 
     }
 }

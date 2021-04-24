@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class DataDictionaryService extends FrameworkServiceApiImpl<DataDictionary, DataDictionaryDAO> {
+public class DataDictionaryService extends FrameworkServiceApiImpl<DataDictionary> {
 
     public DataDictionaryService(DataDictionaryDAO dataDictionaryDAO) {
         super(dataDictionaryDAO);

@@ -5,6 +5,7 @@ import club.koumakan.framework.base.role.RoleService;
 import club.koumakan.framework.base.userrole.UserRole;
 import club.koumakan.framework.base.userrole.UserRoleService;
 import club.koumakan.framework.common.abstractapi.impl.FrameworkServiceApiImpl;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,17 +14,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService extends FrameworkServiceApiImpl<User, UserDAO> {
+public class UserService extends FrameworkServiceApiImpl<User> {
 
     private final UserRoleService userRoleService;
 
     private final RoleService roleService;
 
-    public UserService(UserDAO userDAO, UserRoleService userRoleService, RoleService roleService) {
-        super(userDAO);
+    public UserService(JpaRepository<User, Long> dao, UserRoleService userRoleService, RoleService roleService) {
+        super(dao);
         this.userRoleService = userRoleService;
         this.roleService = roleService;
     }
+
 
     @Transactional
     public void setRole(long userId, List<Long> roleIds) {
@@ -58,13 +60,6 @@ public class UserService extends FrameworkServiceApiImpl<User, UserDAO> {
         userRoleService.deleteByCondition(condition);
 
         super.deleteById(id);
-    }
-
-    @Transactional
-    public void deleteByIds(List<Long> ids) {
-        for (Long id : ids) {
-            deleteById(id);
-        }
     }
 
     @Override

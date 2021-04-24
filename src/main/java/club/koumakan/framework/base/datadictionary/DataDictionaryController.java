@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/base/dataDictionary")
-public class DataDictionaryController extends FrameworkControllerApiImpl<DataDictionary, DataDictionaryDAO> {
+public class DataDictionaryController extends FrameworkControllerApiImpl<DataDictionary> {
 
-    public DataDictionaryController(FrameworkServiceApiImpl<DataDictionary, DataDictionaryDAO> service) {
+    public DataDictionaryController(FrameworkServiceApiImpl<DataDictionary> service) {
         super(service);
     }
 

@@ -1,27 +1,23 @@
 package club.koumakan.framework.common.abstractapi.impl;
 
-import club.koumakan.framework.common.abstractapi.FrameworkDAOApi;
 import club.koumakan.framework.common.abstractapi.FrameworkEntityApi;
 import club.koumakan.framework.common.abstractapi.FrameworkServiceApi;
 import club.koumakan.framework.common.http.PageRequestInfo;
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.bean.copier.CopyOptions;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class FrameworkServiceApiImpl<
-        T extends FrameworkEntityApi,
-        DAO extends JpaRepository<T, Long> & FrameworkDAOApi> implements FrameworkServiceApi<T> {
+public abstract class FrameworkServiceApiImpl<T extends FrameworkEntityApi> implements FrameworkServiceApi<T> {
 
-    private final DAO dao;
+    private final JpaRepository<T, Long> dao;
 
-    public FrameworkServiceApiImpl(DAO dao) {
+    public FrameworkServiceApiImpl(JpaRepository<T, Long> dao) {
         this.dao = dao;
     }
 
@@ -59,33 +55,18 @@ public abstract class FrameworkServiceApiImpl<
 
     @Override
     public T save(T entity) {
-        T newEntity = entity;
-
-        if (entity.getId() != null) {
-            T dbEntity = dao.findById(entity.getId()).get();
-            BeanUtil.copyProperties(entity, dbEntity, CopyOptions.create());
-            newEntity = dbEntity;
-        }
-
-        return dao.save(newEntity);
+        return dao.save(entity);
     }
 
     @Override
+    @Transactional
     public List<T> saveAll(List<T> entityList) {
-        ArrayList<T> newEntityList = new ArrayList<>(entityList.size());
+        ArrayList<T> list = new ArrayList<>(entityList.size());
 
         for (T entity : entityList) {
-            T newEntity = entity;
-
-            if (entity.getId() != null) {
-                T dbEntity = dao.findById(entity.getId()).get();
-                BeanUtil.copyProperties(entity, dbEntity, CopyOptions.create());
-                newEntity = dbEntity;
-            }
-            newEntityList.add(newEntity);
+            list.add(dao.save(entity));
         }
-
-        return dao.saveAll(newEntityList);
+        return list;
     }
 
     @Override
@@ -94,14 +75,21 @@ public abstract class FrameworkServiceApiImpl<
     }
 
     @Override
+    @Transactional
     public void deleteByIds(List<Long> ids) {
-        dao.deleteAllByIdIn(ids);
+        for (Long id : ids) {
+            deleteById(id);
+        }
     }
 
     @Override
+    @Transactional
     public void deleteByCondition(T condition) {
         List<T> entityList = dao.findAll(Example.of(condition));
-        dao.deleteAll(entityList);
+
+        for (T entity : entityList) {
+            deleteById(entity.getId());
+        }
     }
 
     @Override

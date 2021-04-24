@@ -13,11 +13,11 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/base/role")
-public class RoleController extends FrameworkControllerApiImpl<Role, RoleDAO> {
+public class RoleController extends FrameworkControllerApiImpl<Role> {
 
     private final UserRoleService userRoleService;
 
-    public RoleController(FrameworkServiceApiImpl<Role, RoleDAO> service, UserRoleService userRoleService) {
+    public RoleController(FrameworkServiceApiImpl<Role> service, UserRoleService userRoleService) {
         super(service);
         this.userRoleService = userRoleService;
     }
