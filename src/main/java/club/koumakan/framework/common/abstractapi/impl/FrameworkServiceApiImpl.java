@@ -32,7 +32,7 @@ public abstract class FrameworkServiceApiImpl<
 
     @Override
     public T findById(long id, boolean translate) {
-        T entity = dao.findById(id).get();
+        T entity = dao.findById(id).orElse(null);
 
         if (translate) {
             translate(entity);
@@ -63,7 +63,7 @@ public abstract class FrameworkServiceApiImpl<
 
         if (entity.getId() != null) {
             T dbEntity = dao.findById(entity.getId()).get();
-            BeanUtil.copyProperties(entity, dbEntity, CopyOptions.create(null, true));
+            BeanUtil.copyProperties(entity, dbEntity, CopyOptions.create());
             newEntity = dbEntity;
         }
 
@@ -79,7 +79,7 @@ public abstract class FrameworkServiceApiImpl<
 
             if (entity.getId() != null) {
                 T dbEntity = dao.findById(entity.getId()).get();
-                BeanUtil.copyProperties(entity, dbEntity, CopyOptions.create(null, true));
+                BeanUtil.copyProperties(entity, dbEntity, CopyOptions.create());
                 newEntity = dbEntity;
             }
             newEntityList.add(newEntity);
@@ -145,7 +145,7 @@ public abstract class FrameworkServiceApiImpl<
 
     @Override
     public T findOneByCondition(T condition, boolean translate) {
-        T t = dao.findOne(Example.of(condition)).get();
+        T t = dao.findOne(Example.of(condition)).orElse(null);
         translate(t);
         return t;
     }

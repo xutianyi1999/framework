@@ -11,10 +11,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -75,6 +72,12 @@ public class UserController extends FrameworkControllerApiImpl<User, UserDAO> {
         } catch (AuthenticationException e) {
             return MsgResult.error("认证失败");
         }
+    }
+
+    @GetMapping("/logout")
+    public MsgResult<User> logout() {
+        SecurityUtils.getSubject().logout();
+        return MsgResult.success();
     }
 
     private String crypt(String password) {

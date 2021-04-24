@@ -31,7 +31,7 @@ public class RoleController extends FrameworkControllerApiImpl<Role, RoleDAO> {
     }
 
     @Override
-    public MsgResult<Role> deleteById(long id) {
+    public MsgResult<Void> deleteById(long id) {
         UserRole userRoleCondition = new UserRole();
         userRoleCondition.setRoleId(id);
 

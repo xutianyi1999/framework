@@ -68,7 +68,7 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi,
 
     @Override
     @PostMapping("/deleteById")
-    public MsgResult<T> deleteById(long id) {
+    public MsgResult<Void> deleteById(long id) {
         try {
             service.deleteById(id);
             return MsgResult.success();
@@ -80,7 +80,7 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi,
 
     @Override
     @PostMapping("/deleteByIds")
-    public MsgResult<T> deleteByIds(@RequestBody List<Long> ids) {
+    public MsgResult<Void> deleteByIds(@RequestBody List<Long> ids) {
         try {
             service.deleteByIds(ids);
             return MsgResult.success();
@@ -92,7 +92,7 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi,
 
     @Override
     @PostMapping("/deleteByCondition")
-    public MsgResult<T> deleteByCondition(@RequestBody T condition) {
+    public MsgResult<Void> deleteByCondition(@RequestBody T condition) {
         try {
             service.deleteByCondition(condition);
             return MsgResult.success();

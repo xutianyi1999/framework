@@ -16,11 +16,11 @@ public interface FrameworkControllerApi<T> {
 
     MsgResult<List<T>> saveAll(List<T> entityList);
 
-    MsgResult<T> deleteById(long id);
+    MsgResult<Void> deleteById(long id);
 
-    MsgResult<T> deleteByIds(List<Long> ids);
+    MsgResult<Void> deleteByIds(List<Long> ids);
 
-    MsgResult<T> deleteByCondition(T condition);
+    MsgResult<Void> deleteByCondition(T condition);
 
     MsgResult<List<T>> findAll();
 
