@@ -3,6 +3,7 @@ package club.koumakan.framework.base.datadictionary;
 import club.koumakan.framework.common.abstractapi.impl.FrameworkServiceApiImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -11,8 +12,8 @@ import java.util.Map;
 @Service
 public class DataDictionaryService extends FrameworkServiceApiImpl<DataDictionary> {
 
-    public DataDictionaryService(DataDictionaryDAO dataDictionaryDAO) {
-        super(dataDictionaryDAO);
+    public DataDictionaryService(JpaRepository<DataDictionary, Long> dao) {
+        super(dao);
     }
 
     public Map<String, String> findMappingByTypeName(String typeName) {

@@ -2,8 +2,8 @@ package club.koumakan.framework.base.role;
 
 import club.koumakan.framework.base.userrole.UserRole;
 import club.koumakan.framework.base.userrole.UserRoleService;
+import club.koumakan.framework.common.abstractapi.FrameworkServiceApi;
 import club.koumakan.framework.common.abstractapi.impl.FrameworkControllerApiImpl;
-import club.koumakan.framework.common.abstractapi.impl.FrameworkServiceApiImpl;
 import club.koumakan.framework.common.http.MsgResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,7 @@ public class RoleController extends FrameworkControllerApiImpl<Role> {
 
     private final UserRoleService userRoleService;
 
-    public RoleController(FrameworkServiceApiImpl<Role> service, UserRoleService userRoleService) {
+    public RoleController(FrameworkServiceApi<Role> service, UserRoleService userRoleService) {
         super(service);
         this.userRoleService = userRoleService;
     }

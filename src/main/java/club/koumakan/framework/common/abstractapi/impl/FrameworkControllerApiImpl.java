@@ -2,6 +2,7 @@ package club.koumakan.framework.common.abstractapi.impl;
 
 import club.koumakan.framework.common.abstractapi.FrameworkControllerApi;
 import club.koumakan.framework.common.abstractapi.FrameworkEntityApi;
+import club.koumakan.framework.common.abstractapi.FrameworkServiceApi;
 import club.koumakan.framework.common.http.MsgResult;
 import club.koumakan.framework.common.http.PageRequestInfo;
 import org.springframework.data.domain.Page;
@@ -13,9 +14,9 @@ import java.util.List;
 
 public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> implements FrameworkControllerApi<T> {
 
-    private final FrameworkServiceApiImpl<T> service;
+    private final FrameworkServiceApi<T> service;
 
-    public FrameworkControllerApiImpl(FrameworkServiceApiImpl<T> service) {
+    public FrameworkControllerApiImpl(FrameworkServiceApi<T> service) {
         this.service = service;
     }
 

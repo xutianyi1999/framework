@@ -26,7 +26,6 @@ public class UserService extends FrameworkServiceApiImpl<User> {
         this.roleService = roleService;
     }
 
-
     @Transactional
     public void setRole(long userId, List<Long> roleIds) {
         UserRole userRoleCondition = new UserRole();
