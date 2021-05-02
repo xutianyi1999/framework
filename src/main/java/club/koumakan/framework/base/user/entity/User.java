@@ -1,6 +1,6 @@
-package club.koumakan.framework.base.user;
+package club.koumakan.framework.base.user.entity;
 
-import club.koumakan.framework.base.role.Role;
+import club.koumakan.framework.base.role.entity.Role;
 import club.koumakan.framework.common.abstractapi.FrameworkEntityApi;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

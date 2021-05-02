@@ -1,5 +1,7 @@
-package club.koumakan.framework.base.datadictionary;
+package club.koumakan.framework.base.datadictionary.service.impl;
 
+import club.koumakan.framework.base.datadictionary.entity.DataDictionary;
+import club.koumakan.framework.base.datadictionary.service.DataDictionaryService;
 import club.koumakan.framework.common.abstractapi.impl.FrameworkServiceApiImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,9 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class DataDictionaryService extends FrameworkServiceApiImpl<DataDictionary> {
+public class DataDictionaryServiceImpl extends FrameworkServiceApiImpl<DataDictionary> implements DataDictionaryService {
 
-    public DataDictionaryService(JpaRepository<DataDictionary, Long> dao) {
+    public DataDictionaryServiceImpl(JpaRepository<DataDictionary, Long> dao) {
         super(dao);
     }
 

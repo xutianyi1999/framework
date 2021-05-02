@@ -41,9 +41,9 @@ public interface FrameworkServiceApi<T> {
 
     Page<T> findByPage(PageRequestInfo pageRequestInfo, T condition, boolean translate);
 
-    void translate(T entity);
-
     long count(T condition);
 
     boolean exists(T condition);
+
+    void translate(T entity);
 }

@@ -1,4 +1,4 @@
-package club.koumakan.framework.base.role;
+package club.koumakan.framework.base.role.entity;
 
 import club.koumakan.framework.common.abstractapi.FrameworkEntityApi;
 import lombok.Data;

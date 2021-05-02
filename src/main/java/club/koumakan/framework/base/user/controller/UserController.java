@@ -1,5 +1,7 @@
-package club.koumakan.framework.base.user;
+package club.koumakan.framework.base.user.controller;
 
+import club.koumakan.framework.base.user.entity.User;
+import club.koumakan.framework.base.user.service.impl.UserServiceImpl;
 import club.koumakan.framework.common.abstractapi.impl.FrameworkControllerApiImpl;
 import club.koumakan.framework.common.http.MsgResult;
 import cn.hutool.crypto.digest.HMac;
@@ -22,15 +24,15 @@ public class UserController extends FrameworkControllerApiImpl<User> {
 
     private static final String ALGORITHM = "HmacSHA256";
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
     private final byte[] key;
 
     public UserController(
-            UserService userService,
+            UserServiceImpl userServiceImpl,
             @Value("${framework.user.signKey}") String signKey
     ) {
-        super(userService);
-        this.userService = userService;
+        super(userServiceImpl);
+        this.userServiceImpl = userServiceImpl;
         this.key = signKey.getBytes(StandardCharsets.UTF_8);
     }
 
@@ -50,7 +52,7 @@ public class UserController extends FrameworkControllerApiImpl<User> {
 
     @PostMapping("/setRole")
     public MsgResult<Void> setRole(long userId, @RequestBody List<Long> roleIds) {
-        userService.setRole(userId, roleIds);
+        userServiceImpl.setRole(userId, roleIds);
         return MsgResult.success();
     }
 

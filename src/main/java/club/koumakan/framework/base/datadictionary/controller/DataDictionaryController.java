@@ -1,6 +1,7 @@
-package club.koumakan.framework.base.datadictionary;
+package club.koumakan.framework.base.datadictionary.controller;
 
-import club.koumakan.framework.common.abstractapi.FrameworkServiceApi;
+import club.koumakan.framework.base.datadictionary.entity.DataDictionary;
+import club.koumakan.framework.base.datadictionary.service.DataDictionaryService;
 import club.koumakan.framework.common.abstractapi.impl.FrameworkControllerApiImpl;
 import club.koumakan.framework.common.http.MsgResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/base/dataDictionary")
 public class DataDictionaryController extends FrameworkControllerApiImpl<DataDictionary> {
 
-    public DataDictionaryController(FrameworkServiceApi<DataDictionary> service) {
+    public DataDictionaryController(DataDictionaryService service) {
         super(service);
     }
 

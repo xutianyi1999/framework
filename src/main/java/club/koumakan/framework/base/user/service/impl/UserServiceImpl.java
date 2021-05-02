@@ -1,7 +1,9 @@
-package club.koumakan.framework.base.user;
+package club.koumakan.framework.base.user.service.impl;
 
-import club.koumakan.framework.base.role.Role;
-import club.koumakan.framework.base.role.RoleService;
+import club.koumakan.framework.base.role.entity.Role;
+import club.koumakan.framework.base.role.service.RoleService;
+import club.koumakan.framework.base.user.entity.User;
+import club.koumakan.framework.base.user.service.UserService;
 import club.koumakan.framework.base.userrole.UserRole;
 import club.koumakan.framework.base.userrole.UserRoleService;
 import club.koumakan.framework.common.abstractapi.impl.FrameworkServiceApiImpl;
@@ -14,19 +16,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService extends FrameworkServiceApiImpl<User> {
+public class UserServiceImpl extends FrameworkServiceApiImpl<User> implements UserService {
 
     private final UserRoleService userRoleService;
 
     private final RoleService roleService;
 
-    public UserService(JpaRepository<User, Long> dao, UserRoleService userRoleService, RoleService roleService) {
+    public UserServiceImpl(JpaRepository<User, Long> dao, UserRoleService userRoleService, RoleService roleService) {
         super(dao);
         this.userRoleService = userRoleService;
         this.roleService = roleService;
     }
 
     @Transactional
+    @Override
     public void setRole(long userId, List<Long> roleIds) {
         UserRole userRoleCondition = new UserRole();
         userRoleCondition.setUserId(userId);

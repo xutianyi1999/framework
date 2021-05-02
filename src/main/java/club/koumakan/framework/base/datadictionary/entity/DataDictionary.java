@@ -1,4 +1,4 @@
-package club.koumakan.framework.base.datadictionary;
+package club.koumakan.framework.base.datadictionary.entity;
 
 import club.koumakan.framework.common.abstractapi.FrameworkEntityApi;
 import lombok.Data;

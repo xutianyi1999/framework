@@ -1,4 +1,4 @@
-package club.koumakan.framework.base.apiconfig;
+package club.koumakan.framework.base.apiconfig.entity;
 
 import club.koumakan.framework.common.abstractapi.FrameworkEntityApi;
 import lombok.Data;
@@ -14,11 +14,15 @@ public class ApiConfig implements FrameworkEntityApi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String code;
+
     private String name;
 
     private Long parentId;
 
     private Boolean root;
+
+    private Integer order;
 
     private String description;
 }
