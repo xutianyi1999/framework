@@ -8,4 +8,6 @@ import java.util.List;
 public interface UserService extends FrameworkServiceApi<User> {
 
     void setRole(long userId, List<Long> roleIds);
+
+    User findByUsername(String username);
 }

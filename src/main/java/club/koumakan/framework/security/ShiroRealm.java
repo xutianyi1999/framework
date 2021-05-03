@@ -1,7 +1,7 @@
 package club.koumakan.framework.security;
 
 import club.koumakan.framework.base.user.entity.User;
-import club.koumakan.framework.base.user.service.impl.UserServiceImpl;
+import club.koumakan.framework.base.user.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -11,16 +11,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class ShiroRealm extends AuthorizingRealm {
 
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userService;
 
-    public ShiroRealm(UserServiceImpl userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
+    public ShiroRealm(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        User user = userServiceImpl.findByUsername(token.getUsername());
+        User user = userService.findByUsername(token.getUsername());
 
         if (user == null) {
             return null;

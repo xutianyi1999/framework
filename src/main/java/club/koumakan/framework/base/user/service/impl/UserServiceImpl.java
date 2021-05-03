@@ -2,12 +2,12 @@ package club.koumakan.framework.base.user.service.impl;
 
 import club.koumakan.framework.base.role.entity.Role;
 import club.koumakan.framework.base.role.service.RoleService;
+import club.koumakan.framework.base.user.dao.UserDAO;
 import club.koumakan.framework.base.user.entity.User;
 import club.koumakan.framework.base.user.service.UserService;
-import club.koumakan.framework.base.userrole.UserRole;
-import club.koumakan.framework.base.userrole.UserRoleService;
+import club.koumakan.framework.base.userrole.entity.UserRole;
+import club.koumakan.framework.base.userrole.service.UserRoleService;
 import club.koumakan.framework.common.abstractapi.impl.FrameworkServiceApiImpl;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +22,12 @@ public class UserServiceImpl extends FrameworkServiceApiImpl<User> implements Us
 
     private final RoleService roleService;
 
-    public UserServiceImpl(JpaRepository<User, Long> dao, UserRoleService userRoleService, RoleService roleService) {
-        super(dao);
+    public UserServiceImpl(
+            UserDAO userDAO,
+            UserRoleService userRoleService,
+            RoleService roleService
+    ) {
+        super(userDAO);
         this.userRoleService = userRoleService;
         this.roleService = roleService;
     }
@@ -47,6 +51,7 @@ public class UserServiceImpl extends FrameworkServiceApiImpl<User> implements Us
         userRoleService.saveAll(userRoles);
     }
 
+    @Override
     public User findByUsername(String username) {
         User condition = new User();
         condition.setUsername(username);
