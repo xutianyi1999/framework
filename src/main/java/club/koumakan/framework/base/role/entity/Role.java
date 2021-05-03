@@ -4,7 +4,6 @@ import club.koumakan.framework.common.abstractapi.FrameworkEntityApi;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Data
 @Entity
@@ -14,12 +13,10 @@ public class Role implements FrameworkEntityApi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    // 编号
     private String code;
-
+    // 名称
     private String name;
-
-    private Date createTime;
-
+    // 备注
     private String description;
 }

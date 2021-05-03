@@ -6,11 +6,8 @@ import club.koumakan.framework.base.userrole.entity.UserRole;
 import club.koumakan.framework.base.userrole.service.UserRoleService;
 import club.koumakan.framework.common.abstractapi.impl.FrameworkControllerApiImpl;
 import club.koumakan.framework.common.http.MsgResult;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
 
 @RestController
 @RequestMapping("/base/role")
@@ -24,22 +21,14 @@ public class RoleController extends FrameworkControllerApiImpl<Role> {
     }
 
     @Override
-    public MsgResult<Role> save(@RequestBody Role entity) {
-        if (entity.getId() == null) {
-            entity.setCreateTime(new Date());
-        }
-        return super.save(entity);
-    }
-
-    @Override
     public MsgResult<Void> deleteById(long id) {
         UserRole userRoleCondition = new UserRole();
         userRoleCondition.setRoleId(id);
 
-        if (!userRoleService.exists(userRoleCondition)) {
-            return super.deleteById(id);
-        } else {
+        if (userRoleService.exists(userRoleCondition)) {
             return MsgResult.error("存在该角色用户");
+        } else {
+            return super.deleteById(id);
         }
     }
 }

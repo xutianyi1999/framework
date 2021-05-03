@@ -15,6 +15,5 @@ public class RoleServiceImpl extends FrameworkServiceApiImpl<Role> implements Ro
 
     @Override
     public void translate(Role entity) {
-
     }
 }

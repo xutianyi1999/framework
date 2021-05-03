@@ -14,11 +14,11 @@ public class DataDictionary implements FrameworkEntityApi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    // 类型名称
     private String typeName;
-
+    // 映射json
     private String mapping;
-
+    // 备注
     private String description;
 
     @Transient

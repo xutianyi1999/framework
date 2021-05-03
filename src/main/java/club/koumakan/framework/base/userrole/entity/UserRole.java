@@ -13,8 +13,8 @@ public class UserRole implements FrameworkEntityApi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    // 用户id
     private Long userId;
-
+    // 角色id
     private Long roleId;
 }

@@ -17,18 +17,21 @@ public class User implements FrameworkEntityApi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    // 名称
     private String name;
-
+    // 用户名
     private String username;
-
+    // 密码
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-
+    // 是否锁定
+    private Boolean locked;
+    // 创建时间
     private Date createTime;
-
-    private Date updateTime;
 
     @Transient
     private List<Role> roles;
+
+    @Transient
+    private String lockedStr;
 }

@@ -25,6 +25,10 @@ public class ShiroRealm extends AuthorizingRealm {
         if (user == null) {
             return null;
         }
+
+        if (user.getLocked()) {
+            throw new LockedAccountException();
+        }
         return new SimpleAuthenticationInfo(user, user.getPassword(), super.getName());
     }
 
