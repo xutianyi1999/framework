@@ -5,10 +5,12 @@ import club.koumakan.framework.common.abstractapi.FrameworkEntityApi;
 import club.koumakan.framework.common.abstractapi.FrameworkServiceApi;
 import club.koumakan.framework.common.http.MsgResult;
 import club.koumakan.framework.common.http.PageRequestInfo;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -22,6 +24,8 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
 
     @Override
     @GetMapping("/findById")
+    @ResponseBody
+    @ApiOperation("根据ID查找单条记录")
     public MsgResult<T> findById(long id) {
         try {
             return MsgResult.success(service.findById(id, true));
@@ -33,6 +37,8 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
 
     @Override
     @GetMapping("/findByIds")
+    @ResponseBody
+    @ApiOperation("根据ID查找多条记录")
     public MsgResult<List<T>> findByIds(List<Long> ids) {
         try {
             return MsgResult.success(service.findByIds(ids, true));
@@ -44,6 +50,8 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
 
     @Override
     @PostMapping("/save")
+    @ResponseBody
+    @ApiOperation("保存记录")
     public MsgResult<T> save(@RequestBody T entity) {
         try {
             return MsgResult.success(service.save(entity));
@@ -55,6 +63,8 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
 
     @Override
     @PostMapping("/saveAll")
+    @ResponseBody
+    @ApiOperation("保存多条记录")
     public MsgResult<List<T>> saveAll(@RequestBody List<T> entityList) {
         try {
             return MsgResult.success(service.saveAll(entityList));
@@ -66,6 +76,8 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
 
     @Override
     @PostMapping("/deleteById")
+    @ResponseBody
+    @ApiOperation("根据ID删除记录")
     public MsgResult<Void> deleteById(long id) {
         try {
             service.deleteById(id);
@@ -78,6 +90,8 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
 
     @Override
     @PostMapping("/deleteByIds")
+    @ResponseBody
+    @ApiOperation("根据ID删除多条记录")
     public MsgResult<Void> deleteByIds(@RequestBody List<Long> ids) {
         try {
             service.deleteByIds(ids);
@@ -90,6 +104,8 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
 
     @Override
     @PostMapping("/deleteByCondition")
+    @ResponseBody
+    @ApiOperation("根据条件删除记录")
     public MsgResult<Void> deleteByCondition(@RequestBody T condition) {
         try {
             service.deleteByCondition(condition);
@@ -102,6 +118,8 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
 
     @Override
     @GetMapping("/findAll")
+    @ResponseBody
+    @ApiOperation("查找全部记录")
     public MsgResult<List<T>> findAll() {
         try {
             return MsgResult.success(service.findAll(true));
@@ -113,6 +131,8 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
 
     @Override
     @GetMapping("/findByCondition")
+    @ResponseBody
+    @ApiOperation("根据条件查找记录")
     public MsgResult<List<T>> findByCondition(T condition) {
         try {
             return MsgResult.success(service.findByCondition(condition, true));
@@ -124,6 +144,8 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
 
     @Override
     @GetMapping("/findOneByCondition")
+    @ResponseBody
+    @ApiOperation("根据条件查找一条记录")
     public MsgResult<T> findOneByCondition(T condition) {
         try {
             return MsgResult.success(service.findOneByCondition(condition, true));
@@ -135,6 +157,8 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
 
     @Override
     @GetMapping("/findByPage")
+    @ResponseBody
+    @ApiOperation("分页查询记录")
     public MsgResult<Page<T>> findByPage(PageRequestInfo pageRequestInfo, T condition) {
         try {
             return MsgResult.success(service.findByPage(pageRequestInfo, condition, true));
@@ -146,6 +170,8 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
 
     @Override
     @GetMapping("/count")
+    @ResponseBody
+    @ApiOperation("统计")
     public MsgResult<Long> count(T condition) {
         try {
             return MsgResult.success(service.count(condition));
@@ -155,6 +181,10 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
         }
     }
 
+    @Override
+    @GetMapping("/exists")
+    @ResponseBody
+    @ApiOperation("判断记录是否存在")
     public MsgResult<Boolean> exists(T condition) {
         try {
             return MsgResult.success(service.exists(condition));
