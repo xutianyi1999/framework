@@ -130,10 +130,10 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
     }
 
     @Override
-    @GetMapping("/findByCondition")
+    @PostMapping("/findByCondition")
     @ResponseBody
     @ApiOperation("根据条件查找记录")
-    public MsgResult<List<T>> findByCondition(T condition) {
+    public MsgResult<List<T>> findByCondition(@RequestBody T condition) {
         try {
             return MsgResult.success(service.findByCondition(condition, true));
         } catch (Exception e) {
@@ -143,10 +143,10 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
     }
 
     @Override
-    @GetMapping("/findOneByCondition")
+    @PostMapping("/findOneByCondition")
     @ResponseBody
     @ApiOperation("根据条件查找一条记录")
-    public MsgResult<T> findOneByCondition(T condition) {
+    public MsgResult<T> findOneByCondition(@RequestBody T condition) {
         try {
             return MsgResult.success(service.findOneByCondition(condition, true));
         } catch (Exception e) {
@@ -156,12 +156,12 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
     }
 
     @Override
-    @GetMapping("/findByPage")
+    @PostMapping("/findByPage")
     @ResponseBody
     @ApiOperation("分页查询记录")
-    public MsgResult<Page<T>> findByPage(PageRequestInfo pageRequestInfo, T condition) {
+    public MsgResult<Page<T>> findByPage(@RequestBody PageRequestInfo<T> pageRequestInfo) {
         try {
-            return MsgResult.success(service.findByPage(pageRequestInfo, condition, true));
+            return MsgResult.success(service.findByPage(pageRequestInfo, true));
         } catch (Exception e) {
             e.printStackTrace();
             return MsgResult.error();
@@ -169,10 +169,10 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
     }
 
     @Override
-    @GetMapping("/count")
+    @PostMapping("/count")
     @ResponseBody
     @ApiOperation("统计")
-    public MsgResult<Long> count(T condition) {
+    public MsgResult<Long> count(@RequestBody T condition) {
         try {
             return MsgResult.success(service.count(condition));
         } catch (Exception e) {
@@ -182,10 +182,10 @@ public abstract class FrameworkControllerApiImpl<T extends FrameworkEntityApi> i
     }
 
     @Override
-    @GetMapping("/exists")
+    @PostMapping("/exists")
     @ResponseBody
     @ApiOperation("判断记录是否存在")
-    public MsgResult<Boolean> exists(T condition) {
+    public MsgResult<Boolean> exists(@RequestBody T condition) {
         try {
             return MsgResult.success(service.exists(condition));
         } catch (Exception e) {

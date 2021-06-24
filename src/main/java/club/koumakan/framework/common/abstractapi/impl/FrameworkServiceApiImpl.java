@@ -66,6 +66,8 @@ public abstract class FrameworkServiceApiImpl<T extends FrameworkEntityApi> impl
         for (T entity : entityList) {
             list.add(dao.save(entity));
         }
+
+        dao.flush();
         return list;
     }
 
@@ -80,6 +82,7 @@ public abstract class FrameworkServiceApiImpl<T extends FrameworkEntityApi> impl
         for (Long id : ids) {
             deleteById(id);
         }
+        dao.flush();
     }
 
     @Override
@@ -90,6 +93,7 @@ public abstract class FrameworkServiceApiImpl<T extends FrameworkEntityApi> impl
         for (T entity : entityList) {
             deleteById(entity.getId());
         }
+        dao.flush();
     }
 
     @Override
@@ -134,17 +138,20 @@ public abstract class FrameworkServiceApiImpl<T extends FrameworkEntityApi> impl
     @Override
     public T findOneByCondition(T condition, boolean translate) {
         T t = dao.findOne(Example.of(condition)).orElse(null);
-        translate(t);
+
+        if (translate) {
+            translate(t);
+        }
         return t;
     }
 
     @Override
-    public Page<T> findByPage(PageRequestInfo pageRequestInfo, T condition) {
-        return findByPage(pageRequestInfo, condition, false);
+    public Page<T> findByPage(PageRequestInfo<T> pageRequestInfo) {
+        return findByPage(pageRequestInfo, false);
     }
 
     @Override
-    public Page<T> findByPage(PageRequestInfo pageRequestInfo, T condition, boolean translate) {
+    public Page<T> findByPage(PageRequestInfo<T> pageRequestInfo, boolean translate) {
         Direction direction;
 
         if (PageRequestInfo.ASC.equalsIgnoreCase(pageRequestInfo.getDirection())) {
@@ -160,18 +167,23 @@ public abstract class FrameworkServiceApiImpl<T extends FrameworkEntityApi> impl
                 pageRequestInfo.getFieldName()
         );
 
+        Page<T> page = conditionPage(pageRequest, pageRequestInfo.getCondition());
+
+        if (translate) {
+            for (T entity : page.getContent()) {
+                translate(entity);
+            }
+        }
+        return page;
+    }
+
+    public Page<T> conditionPage(PageRequest pageRequest, T condition) {
         Page<T> page;
 
         if (condition != null) {
             page = dao.findAll(Example.of(condition), pageRequest);
         } else {
             page = dao.findAll(pageRequest);
-        }
-
-        if (translate) {
-            for (T entity : page.getContent()) {
-                translate(entity);
-            }
         }
         return page;
     }

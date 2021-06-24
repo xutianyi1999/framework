@@ -37,9 +37,9 @@ public interface FrameworkServiceApi<T> {
 
     T findOneByCondition(T condition, boolean translate);
 
-    Page<T> findByPage(PageRequestInfo pageRequestInfo, T condition);
+    Page<T> findByPage(PageRequestInfo<T> pageRequestInfo);
 
-    Page<T> findByPage(PageRequestInfo pageRequestInfo, T condition, boolean translate);
+    Page<T> findByPage(PageRequestInfo<T> pageRequestInfo, boolean translate);
 
     long count(T condition);
 

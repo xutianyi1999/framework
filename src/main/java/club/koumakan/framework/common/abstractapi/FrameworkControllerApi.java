@@ -28,7 +28,7 @@ public interface FrameworkControllerApi<T> {
 
     MsgResult<T> findOneByCondition(T condition);
 
-    MsgResult<Page<T>> findByPage(PageRequestInfo pageRequestInfo, T condition);
+    MsgResult<Page<T>> findByPage(PageRequestInfo<T> pageRequestInfo);
 
     MsgResult<Long> count(T condition);
 
